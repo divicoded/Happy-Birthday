@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Happy Birthday</title>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@400;500;600;700&family=Tiro+Devanagari+Hindi:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* Custom font face - Winterante */
+    @font-face {
+      font-family: 'Winterante';
+      src: url('Winterante.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    /* CSS Variables */
+    :root {
+      --krishna-blue: #6ec1e4;
+      --medium-blue: #3a7bd5;
+      --lotus-pink: #f7b6d2;
+      --divine-gold: #ffe9a8;
+      --glass: rgba(255, 255, 255, 0.3);
+      --glass-border: rgba(255, 255, 255, 0.45);
+      --glass-shadow: rgba(0, 0, 0, 0.18);
+      --accent-purple: #8b5a8c;
+      
+      /* Container sizes */
+      --container-padding: clamp(1rem, 4vw, 2.5rem);
+      --card-max-width: min(92vw, 560px);
+      --card-padding: clamp(2rem, 6vw, 3.5rem);
+      
+      /* New variables */
+      --glass-panel: rgba(255, 255, 255, 0.2);
+      --card-radius: clamp(1.5rem, 4vw, 2.2rem);
+    }
+
+    /* Base reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* HTML and Body setup */
+    html {
+      height: 100%;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      touch-action: manipulation;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      width: 100%;
+      font-family: 'Baloo Bhaijaan 2', sans-serif;
+      background: linear-gradient(
+        145deg,
+        var(--krishna-blue),
+        var(--medium-blue),
+        var(--lotus-pink),
+        var(--divine-gold)
+      );
+      background-size: 400% 400%;
+      animation: bgShift 25s ease infinite;
+      overflow-x: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* Soft-edged glass spheres for background */
+    .glass-sphere {
+      position: fixed;
+      border-radius: 50%;
+      background: radial-gradient(circle at 60% 30%, 
+                  rgba(255, 255, 255, 0.6) 0%,   /* highlight */
+                  rgba(255, 255, 255, 0.15) 35%, /* mid */
+                  rgba(255, 255, 255, 0.05) 70%, /* soft fade */
+                  rgba(255, 255, 255, 0) 100%);  /* vanish */
+      backdrop-filter: blur(400px);
+      -webkit-backdrop-filter: blur(200px);
+      border: none;
+      box-shadow:none;
+      animation: floatSphere 20s ease-in-out infinite both;
+      z-index: 1;
+    }
+
+
+    .glass-sphere:nth-child(1) {
+      top: 15%;
+      left: 10%;
+      width: 180px;
+      height: 180px;
+      animation-delay: 0s;
+      animation-duration: 22s;
+    }
+
+    .glass-sphere:nth-child(2) {
+      top: 65%;
+      right: 12%;
+      width: 140px;
+      height: 140px;
+      animation-delay: -5s;
+      animation-duration: 18s;
+    }
+
+    .glass-sphere:nth-child(3) {
+      bottom: 20%;
+      left: 22%;
+      width: 110px;
+      height: 110px;
+      animation-delay: -10s;
+      animation-duration: 25s;
+    }
+
+    @keyframes floatSphere {
+      0%, 100% { 
+        transform: translateY(0) translateX(0) scale(1); 
+      }
+      33% { 
+        transform: translateY(-25px) translateX(15px) scale(1.05); 
+      }
+      66% { 
+        transform: translateY(10px) translateX(-10px) scale(0.98); 
+      }
+    }
+
+    /* Background animation */
+    @keyframes bgShift {
+      0%, 100% { background-position: 0% 50%; }
+      25% { background-position: 50% 0%; }
+      50% { background-position: 100% 50%; }
+      75% { background-position: 50% 100%; }
+    }
+
+    /* Main container */
+    main {
+      position: relative;
+      z-index: 20;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--container-padding);
+      flex-direction: column;
+    }
+
+    /* Card wrapper for positioning context */
+    .card-wrapper {
+      position: relative;
+      display: inline-block;
+      margin: 2rem;
+    }
+
+    /* Card container - larger size */
+    .card {
+      position: relative;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border-radius: var(--card-radius);
+      padding: var(--card-padding);
+      padding-bottom: clamp(4.5rem, 10vw, 7rem); /* More space for larger Krishna */
+      max-width: var(--card-max-width);
+      width: 100%;
+      box-shadow: 
+        0 30px 60px var(--glass-shadow),
+        0 0 0 1px rgba(255,255,255,0.25) inset,
+        0 15px 40px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      overflow: visible;
+      display: flex; 
+      flex-direction: column; 
+      align-items: center;
+      animation: cardEnter 2s ease 0.3s both;
+    }
+
+    /* Card entrance animation */
+    @keyframes cardEnter {
+      0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+        box-shadow: 0 0 0 rgba(0,0,0,0);
+      }
+      60% {
+        opacity: 1;
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+      }
+    }
+
+    /* Glass effect overlay */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        135deg, 
+        rgba(255,255,255,0.2), 
+        transparent 40%, 
+        rgba(255,255,255,0.08)
+      );
+      pointer-events: none;
+      border-radius: inherit;
+    }
+
+    /* Overlay Calendar */
+    .gcal {
+      position: absolute;
+      top: -25px;
+      left: -25px;
+      width: clamp(65px, 13vw, 80px);
+      height: clamp(75px, 15vw, 95px);
+      border-radius: clamp(12px, 3vw, 16px);
+      overflow: hidden;
+      background: rgba(173,216,230,.35);
+      border: 1px solid rgba(255,255,255,.45);
+      box-shadow: 0 10px 28px rgba(135,206,250,.45);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      color: #0077b6;
+      opacity: 0; /* animated in */
+      z-index: 5;
+      transform: rotate(-4deg); /* initial tilt */
+    }
+
+    /* Calendar month header */
+    .gcal .month {
+      background: linear-gradient(135deg,#90d5ff,#ffffff);
+      font-size: clamp(11px, 2.7vw, 13px);
+      font-weight: 700;
+      padding: clamp(5px, 1.2vw, 6px) 0;
+      letter-spacing: 0.5px;
+    }
+
+    /* Calendar date number */
+    .gcal .date {
+      font-size: clamp(24px, 5.5vw, 30px);
+      font-weight: 700;
+      line-height: 1;
+      padding: clamp(12px, 3.5vw, 16px) 0 clamp(6px, 2.2vw, 8px);
+      text-shadow: 0 0 10px rgba(255,255,255,.9);
+    }
+
+    /* Date pill inside card */
+    .date-pill {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      padding: clamp(7px, 2.2vw, 9px) clamp(14px, 3.5vw, 18px);
+      background: rgba(255,255,255,0.3);
+      border: 1px solid rgba(255,255,255,0.45);
+      border-radius: 999px;
+      font-size: clamp(0.8rem, 2.8vw, 0.95rem);
+      font-weight: 600;
+      color: #2d5a4f;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.12);
+      white-space: nowrap;
+      opacity: 0;
+    }
+
+    /* Content container for better spacing control */
+    .card-content {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(1.2rem, 3.5vw, 1.8rem);
+      margin-top: 2rem;
+    }
+
+    /* Main heading */
+    .card h1 {
+      font-family: 'Winterante', 'Tiro Devanagari Hindi', sans-serif;
+      font-size: clamp(2rem, 6vw, 3rem);
+      background: linear-gradient(135deg, #2d5a4f, var(--accent-purple), #4a7c59);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 2; /* Increased line height */
+      font-weight: 500;
+      margin: 0;
+      letter-spacing: 0.5px;
+    }
+
+    /* Paragraph text styling */
+    .card p {
+      font-size: clamp(1.05rem, 3.5vw, 1.25rem);
+      color: rgba(45, 90, 79, 0.95);
+      line-height: 1.7; /* Increased line height */
+      font-weight: 500;
+      max-width: 100%;
+      margin: 0;
+      letter-spacing: 0.3px;
+    }
+
+    /* Button container */
+    .button-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-top: 0.8rem;
+    }
+
+    /* Beautiful button with refined animations */
+    .card button {
+      background: linear-gradient(135deg, #4a7c59, #7fb069, var(--accent-purple));
+      background-size: 200% 200%;
+      color: #fff;
+      font-family: 'Baloo Bhaijaan 2', sans-serif;
+      font-size: clamp(1rem, 3.5vw, 1.15rem);
+      font-weight: 600;
+      border: none;
+      border-radius: 50px;
+      padding: clamp(0.85rem, 3vw, 1rem) clamp(1.7rem, 4.5vw, 2.2rem);
+      cursor: pointer;
+      box-shadow: 
+        0 10px 25px rgba(45, 90, 79, 0.35), 
+        0 3px 8px rgba(45, 90, 79, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.35);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      min-height: 50px;
+      touch-action: manipulation;
+      animation: buttonGlow 4s ease-in-out infinite;
+      width: auto;
+      max-width: 100%;
+      letter-spacing: 0.5px;
+    }
+
+    /* Button glow animation */
+    @keyframes buttonGlow {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    /* Button shine effect */
+    .card button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+      transition: left 0.6s ease;
+    }
+
+    /* Button hover effects */
+    .card button:hover::before,
+    .card button:active::before {
+      left: 100%;
+    }
+
+    .card button:hover {
+      transform: translateY(-3px);
+      box-shadow: 
+        0 15px 35px rgba(45, 90, 79, 0.45), 
+        0 5px 15px rgba(45, 90, 79, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.45);
+    }
+
+    .card button:active {
+      transform: translateY(0);
+      transition: all 0.1s ease;
+    }
+
+    /* Krishna image positioning*/
+    .krishna-peek-inside {
+      position: absolute;
+      bottom: -20px; =
+      left: 50%;
+      transform: translateX(-50%);
+      width: clamp(110px, 22vw, 150px); 
+      height: clamp(110px, 22vw, 150px); 
+      z-index: 25;
+    }
+
+    .krishna-peek-inside img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.2));
+    }
+
+    /* Rotating element */
+    .rotator {
+      position: absolute;
+      bottom: -40px;
+      right: -40px;
+      width: 120px;
+      height: 120px;
+      opacity: 0.5;
+      z-index: 0;
+    }
+    .rotator img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    /* Floating items around the card - decorative elements */
+    .card .floater-item {
+      position: absolute;
+      animation: itemFloat 12s ease-in-out infinite;
+      opacity: 0.9;
+      pointer-events: none;
+      z-index: 10;
+      width: clamp(50px, 12vw, 75px);
+    }
+    
+    .card .floater-item img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    /* Floating items positions - card ke around */
+    .floater-top-left { 
+      top: -30px; 
+      left: -20px; 
+      animation-delay: 0.5s;
+    }
+    .floater-top-right { 
+      top: -25px; 
+      right: -20px; 
+      animation-delay: 1s;
+    }
+    .floater-bottom-left { 
+      bottom: -15px; 
+      left: -15px; 
+      animation-delay: 1.5s;
+      width: clamp(45px, 10vw, 65px) !important;
+    }
+    .floater-bottom-right { 
+      bottom: -10px; 
+      right: -15px; 
+      animation-delay: 2s;
+      width: clamp(55px, 13vw, 80px) !important;
+    }
+
+    /* Floating animation for decorative items */
+    @keyframes itemFloat {
+      0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+      33% { transform: translateY(-10px) rotate(3deg) scale(1.05); }
+      66% { transform: translateY(-5px) rotate(-2deg) scale(0.95); }
+    }
+
+    /* Background floating elements */
+    .floater {
+      position: fixed;
+      pointer-events: none;
+      opacity: 0.2;
+      will-change: transform;
+      animation: complexFloat 25s ease-in-out infinite;
+      transform-origin: center;
+      z-index: 2;
+    }
+
+    .floater.large {
+      opacity: 0.25;
+      z-index: 2;
+    }
+
+    .floater.small {
+      opacity: 0.15;
+    }
+
+    /* Complex floating animation for background elements */
+    @keyframes complexFloat {
+      0% { 
+        transform: translateY(0) translateX(0) rotate(0deg) scale(1);
+      }
+      20% { 
+        transform: translateY(-18px) translateX(12px) rotate(72deg) scale(1.05);
+      }
+      40% { 
+        transform: translateY(-12px) translateX(-6px) rotate(144deg) scale(0.95);
+      }
+      60% { 
+        transform: translateY(-22px) translateX(15px) rotate(216deg) scale(1.03);
+      }
+      80% { 
+        transform: translateY(-10px) translateX(-10px) rotate(288deg) scale(0.97);
+      }
+      100% { 
+        transform: translateY(0) translateX(0) rotate(360deg) scale(1);
+      }
+    }
+
+    /* Sparkle effects */
+    .sparkle {
+      position: fixed;
+      width: 5px;
+      height: 5px;
+      background: radial-gradient(circle, #ffd700, transparent);
+      border-radius: 50%;
+      animation: sparkle 3s ease-in-out infinite;
+      z-index: 5;
+    }
+
+    @keyframes sparkle {
+      0%, 100% { 
+        opacity: 0;
+        transform: scale(0);
+      }
+      50% { 
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* Mobile devices optimizations */
+    @media (max-width: 480px) {
+      .card {
+        padding: 1.8rem;
+        padding-bottom: 4.5rem;
+        border-radius: 1.5rem;
+      }
+      
+      .gcal {
+        top: -20px;
+        left: -15px;
+        width: 60px;
+        height: 70px;
+      }
+      
+      .date-pill {
+        top: 8px;
+        right: 12px;
+      }
+      
+      .krishna-peek-inside {
+        width: 150px;
+        height: 150px;
+        bottom: -30px;
+      }
+      
+      .rotator {
+        width: 200px;
+        height: 200px;
+        bottom: -80px;
+        right: -80px;
+      }
+      
+      .floater-item {
+        width: 55px;
+      }
+      
+      /* Mobile floating items adjustment */
+      .floater-top-left, .floater-top-right {
+        top: -25px;
+      }
+      
+      .floater-bottom-left, .floater-bottom-right {
+        bottom: -15px;
+      }
+      
+      .glass-sphere {
+        width: 130px;
+        height: 130px;
+      }
+      
+      .glass-sphere:nth-child(1) {
+        top: 12%;
+        left: 8%;
+      }
+    }
+
+    /* Small height screens - landscape phones */
+    @media (max-height: 600px) {
+      main {
+        padding: 1.2rem;
+      }
+      
+      .card {
+        padding: 1.5rem;
+        padding-bottom: 4rem;
+      }
+      
+      .card-content {
+        gap: 1rem;
+      }
+      
+      .krishna-peek-inside {
+        width: 90px;
+        height: 90px;
+      }
+    }
+
+    /* Tablet and medium screens */
+    @media (min-width: 481px) and (max-width: 768px) {
+      .card {
+        max-width: 500px;
+      }
+    }
+
+    /* Large screens */
+    @media (min-width: 769px) {
+      :root {
+        --card-max-width: 540px;
+        --card-padding: 3rem;
+      }
+      
+      .card {
+        padding-bottom: 5.5rem;
+      }
+      
+      .glass-sphere {
+        width: 200px;
+        height: 200px;
+      }
+      
+      .glass-sphere:nth-child(1) {
+        width: 220px;
+        height: 220px;
+      }
+    }
+
+    /* Font size fix - prevent zoom */
+    input, button, textarea, select {
+      font-size: 16px !important;
+    }
+
+    /* High DPI screens */
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+      .krishna-peek-inside img,
+      .floater-item img {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+      }
+    }
+
+    /* Reduced motion preference */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Glass spheres for background depth -->
+  <div class="glass-sphere"></div>
+  <div class="glass-sphere"></div>
+  <div class="glass-sphere"></div>
+
+  <main>
+    <!-- Card wrapper for positioning context -->
+    <div class="card-wrapper">
+      <!-- Overlay Calendar -->
+      <div class="gcal">
+        <div class="month">SEP</div>
+        <div class="date">27</div>
+      </div>
+
+      <!-- Main card container -->
+      <div class="card">
+        <!-- Date pill -->
+        <div class="date-pill" id="datePill">Loading…</div>
+        
+        <!-- Content container for better spacing -->
+        <div class="card-content">
+          <!-- Main content - heading, text and button -->
+          <h1>On this blessed Birthday…</h1>
+          <p>…may Krishna's flute guide your heart to peace, love, and a joyful birthday journey.</p>
+          
+          <div class="button-container">
+            <button onclick="location.href='phase2.html'">With every step, a leela unfolds</button>
+          </div>
+        </div>
+        
+        <!-- Krishna image peeking from the bottom -->
+        <div class="krishna-peek-inside">
+          <img src="littleKanha.gif" alt="Peeking Krishna" />
+        </div>
+        
+        <!-- Rotating decorative element -->
+        <div class="rotator">
+          <img src="rotator.png" alt="Rotating decorative" />
+        </div>
+        
+        <!-- Floating decorative items around the card -->
+        <div class="floater-item floater-top-left">
+          <img src="emoji (2).gif" alt="Floating emoji" />
+        </div>
+        
+        <div class="floater-item floater-top-right">
+          <img src="cake.gif" alt="Floating cake" />
+        </div>
+        
+        <div class="floater-item floater-bottom-left">
+          <img src="gift.gif" alt="Floating gift" />
+        </div>
+        
+        <div class="floater-item floater-bottom-right">
+          <img src="peacock.gif" alt="Floating peacock" />
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script type="module">
+    import { animate } from "https://cdn.jsdelivr.net/npm/animejs@4.1.3/lib/anime.esm.js";
+
+    // Date calculation
+    const pillEl = document.getElementById("datePill");
+    const targetDate = new Date("2025-09-27");
+    const today = new Date();
+    const daysLeft = Math.ceil((targetDate - today) / (1000 * 60 * 60 * 24));
+    
+    // Update pill text
+    pillEl.textContent = daysLeft > 0 ? `${daysLeft} days left` : "🎉 It's today!";
+
+    // Animate calendar entrance + tilt float
+    animate(".gcal", {
+      translateX: [-40, 0],
+      translateY: [-40, 0],
+      rotate: [-10, -4], // tilt in
+      opacity: [0, 1],
+      easing: "spring(1, 80, 10, 0)",
+      duration: 1200
+    });
+    
+    // Idle float tilt loop for calendar
+    animate(".gcal", {
+      translateY: [-4, 4],
+      direction: "alternate",
+      easing: "easeInOutSine",
+      duration: 4000,
+      loop: true,
+      delay: 1500
+    });
+
+    // Add idle float tilt loop
+    animate(".gcal", {
+      rotate: [-6, -2],
+      direction: "alternate",
+      easing: "easeInOutSine",
+      duration: 4000,
+      loop: true,
+      delay: 1500
+    });
+
+    // Animate pill fade-in
+    animate(".date-pill", {
+      translateY: [-10, 0],
+      opacity: [0, 1],
+      delay: 800,
+      easing: "spring(1, 90, 10, 0)",
+      duration: 800
+    });
+
+    // Rotating element animation
+    animate(".rotator", {
+      rotate: 360,
+      duration: 12000,
+      easing: "linear",
+      loop: true
+    });
+
+    // Background floating elements images
+    const floaters = [
+      "bgele1.png",
+      "bgele2.png"
+    ];
+
+    // Create random floating background elements
+    for (let i = 0; i < 12; i++) {
+      const img = document.createElement("img");
+      img.src = floaters[Math.floor(Math.random() * floaters.length)];
+      img.className = "floater";
+      
+      // Random size and position
+      const size = 40 + Math.random() * 55;
+      const isLarge = size > 70;
+      const isSmall = size < 50;
+      
+      // Add classes based on size
+      if (isLarge) img.classList.add('large');
+      if (isSmall) img.classList.add('small');
+      
+      // Random positioning
+      img.style.top = `${Math.random() * 100}vh`;
+      img.style.left = `${Math.random() * 100}vw`;
+      img.style.width = `${size}px`;
+      img.style.transform = `rotate(${Math.random() * 360}deg)`;
+      img.style.animationDuration = `${18 + Math.random() * 20}s`;
+      img.style.animationDelay = `${Math.random() * 8}s`;
+      
+      document.body.appendChild(img);
+    }
+
+    // Add sparkle effects
+    for (let i = 0; i < 15; i++) {
+      const sparkle = document.createElement("div");
+      sparkle.className = "sparkle";
+      sparkle.style.top = `${Math.random() * 100}vh`;
+      sparkle.style.left = `${Math.random() * 100}vw`;
+      sparkle.style.animationDelay = `${Math.random() * 3}s`;
+      sparkle.style.animationDuration = `${2 + Math.random() * 2}s`;
+      document.body.appendChild(sparkle);
+    }
+
+    // Mobile optimization - prevent double tap zoom
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function (event) {
+      const now = (new Date()).getTime();
+      if (now - lastTouchEnd <= 300) {
+        event.preventDefault();
+      }
+      lastTouchEnd = now;
+    }, false);
+
+    // Disable context menu - on long press
+    document.addEventListener('contextmenu', e => e.preventDefault());
+
+    // Handle orientation change - on mobile rotation
+    window.addEventListener('orientationchange', function() {
+      setTimeout(function() {
+        window.scrollTo(0, 0);
+      }, 100);
+    });
+
+    // Resize event listener - adjust on window size change
+    window.addEventListener('resize', function() {
+      // Update viewport height in CSS custom properties
+      document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+    });
+
+    // Set initial viewport height
+    document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+  </script>
+</body>
+</html>
